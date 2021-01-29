@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const User = require('../../model/User');
+const { signAccessToken } = require('../../helpers/jwt_token');
 
 exports.signup = async (req, res) => {
     // checking if the user already in the database
@@ -20,8 +21,18 @@ exports.signup = async (req, res) => {
 
     try {
         await user.save();
-        return res.send({ userId: user._id, firstName: user.firstName, lastName: user.lastName, email: user.email });
+        const accessToken = await signAccessToken(user._id);
+        
+        return res.send({
+            userId: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            signAccessToken: accessToken,
+        });
     } catch (error) {
+        console.log(error);
+        
         return res.status(400).send(error);
     }
 };
