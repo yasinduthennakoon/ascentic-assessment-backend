@@ -1,11 +1,9 @@
-const express = require('express');
 const dotenv = require('dotenv');
+const app = require('./src/app');
 
 dotenv.config({
     path: './config.env',
 });
-
-const app = express();
 
 process.on('uncaughtException', (err) => {
     console.log('UNCAUGHT EXCEPTION!!! shutting down...');
