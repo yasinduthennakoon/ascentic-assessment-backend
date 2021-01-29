@@ -13,14 +13,11 @@ process.on('uncaughtException', (err) => {
 });
 
 const database = process.env.DATABASE.replace('<password>', process.env.DATABASE_PASSWORD);
-console.log(database);
 
 // Connect the database
 mongoose
     .connect(database, {
         useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
         useUnifiedTopology: true,
     })
     .then(() => {
