@@ -13,7 +13,7 @@ const todoSchema = new mongoose.Schema({
         min: 6,
         max: 2500,
     },
-    status: {
+    activeStatus: {
         type: Boolean,
         required: true,
     },

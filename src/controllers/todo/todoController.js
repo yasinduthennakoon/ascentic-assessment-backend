@@ -41,7 +41,7 @@ exports.getAll = async (req, res) => {
 
 exports.getActive = async (req, res) => {
     try {
-        const allActiveTodos = await Todo.find({ userId: req.payload.userId, status: false });
+        const allActiveTodos = await Todo.find({ userId: req.payload.userId, status: true });
         res.status(200).send(allActiveTodos);
     } catch (error) {
         console.log(error);
