@@ -18,7 +18,21 @@ const signinSchema = Joi.object({
         .required(),
 });
 
+const createTodoSchema = Joi.object({
+    title: Joi.string().min(6).max(255).required(),
+    description: Joi.string().min(6).max(2500).required(),
+    activeStatus: Joi.boolean().required(),
+});
+
+const updateTodoSchema = Joi.object({
+    title: Joi.string().min(6).max(255),
+    description: Joi.string().min(6).max(2500),
+    activeStatus: Joi.boolean(),
+});
+
 module.exports = {
     signupSchema,
     signinSchema,
+    createTodoSchema,
+    updateTodoSchema,
 };

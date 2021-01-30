@@ -1,32 +1,37 @@
 const Todo = require('../../model/Todos');
+const { createTodoSchema, updateTodoSchema } = require('../../helpers/validation_schema');
 
 exports.create = async (req, res) => {
-    console.log(req.payload);
-
-    const newTodo = new Todo({
-        title: req.body.title,
-        description: req.body.description,
-        status: req.body.status,
-        userId: req.payload.userId,
-    });
-
     try {
+        // validating request body
+        const validateBody = await createTodoSchema.validateAsync(req.body);
+
+        const newTodo = new Todo({
+            title: validateBody.title,
+            description: validateBody.description,
+            activeStatus: validateBody.activeStatus,
+            userId: req.payload.userId,
+        });
+
         const savedTodo = await newTodo.save();
         return res.status(200).send(savedTodo);
     } catch (error) {
-        return res.status(400).send('Internal error');
+        return res.status(400).send(error);
     }
 };
 
 exports.update = async (req, res) => {
     try {
-        const updateTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+        // validating request body
+        const validateBody = await updateTodoSchema.validateAsync(req.body);
+
+        const updateTodo = await Todo.findByIdAndUpdate(req.params.id, validateBody, {
             new: true,
         });
 
-        res.status(200).send(updateTodo);
+        return res.status(200).send(updateTodo);
     } catch (error) {
-        console.log(error);
+        return res.status(400).send(error);
     }
 };
 
