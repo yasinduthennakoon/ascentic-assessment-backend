@@ -19,5 +19,21 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-    res.status(200).send("update");
+    try {
+        const updateTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+        });
+
+        res.status(200).send(updateTodo);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getAll = async (req, res) => {
+    try {
+        res.status(200).send("get all");
+    } catch (error) {
+        console.log(error);
+    }
 };
