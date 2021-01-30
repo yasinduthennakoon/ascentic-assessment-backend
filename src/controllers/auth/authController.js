@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
     try {
         await user.save();
         const accessToken = await signAccessToken(user._id);
-        
+
         return res.send({
             userId: user._id,
             firstName: user.firstName,
@@ -32,7 +32,7 @@ exports.signup = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        
+
         return res.status(400).send(error);
     }
 };
@@ -46,5 +46,18 @@ exports.signin = async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid password');
 
-    return res.status(200).send('Logged In');
+    try {
+        const accessToken = await signAccessToken(user._id);
+        return res
+            .status(200)
+            .send({
+                userId: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                signAccessToken: accessToken,
+            });
+    } catch (error) {
+        return res.status(400).send('Internal Error');
+    }
 };
