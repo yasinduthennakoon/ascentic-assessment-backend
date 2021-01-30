@@ -32,7 +32,7 @@ exports.update = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        const allTodos = await Todo.find({userId: req.payload.userId})    
+        const allTodos = await Todo.find({ userId: req.payload.userId });
         res.status(200).send(allTodos);
     } catch (error) {
         console.log(error);
@@ -41,10 +41,19 @@ exports.getAll = async (req, res) => {
 
 exports.getActive = async (req, res) => {
     try {
-        const allTodos = await Todo.find({userId: req.payload.userId, status: false})    
-        res.status(200).send(allTodos);
+        const allActiveTodos = await Todo.find({ userId: req.payload.userId, status: false });
+        res.status(200).send(allActiveTodos);
     } catch (error) {
         console.log(error);
     }
 };
 
+exports.delete = async (req, res) => {
+    try {
+        const deleteTodo = await Todo.deleteOne({ _id: req.params.id }, { new: true });
+        console.log(deleteTodo);
+        res.status(200).send(deleteTodo);
+    } catch (error) {
+        console.log(error);
+    }
+};
