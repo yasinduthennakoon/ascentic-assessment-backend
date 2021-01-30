@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 // Import Routes
 const authRoute = require('./routes/userRoutes');
+const todoRoute = require('./routes/todoRoutes');
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/user', authRoute);
+app.use('/api/todo', todoRoute);
 
 module.exports = app;
  
