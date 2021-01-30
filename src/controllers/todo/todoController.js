@@ -32,8 +32,19 @@ exports.update = async (req, res) => {
 
 exports.getAll = async (req, res) => {
     try {
-        res.status(200).send("get all");
+        const allTodos = await Todo.find({userId: req.payload.userId})    
+        res.status(200).send(allTodos);
     } catch (error) {
         console.log(error);
     }
 };
+
+exports.getActive = async (req, res) => {
+    try {
+        const allTodos = await Todo.find({userId: req.payload.userId, status: false})    
+        res.status(200).send(allTodos);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
