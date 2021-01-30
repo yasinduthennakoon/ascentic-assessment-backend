@@ -17,4 +17,3 @@ app.use('/api/user', authRoute);
 app.use('/api/todo', todoRoute);
 
 module.exports = app;
- 

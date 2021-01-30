@@ -1,4 +1,5 @@
 const Todo = require('../../model/Todos');
+const createError = require('../../helpers/error_response')
 const { createTodoSchema, updateTodoSchema } = require('../../helpers/validation_schema');
 
 exports.create = async (req, res) => {
@@ -16,7 +17,10 @@ exports.create = async (req, res) => {
         const savedTodo = await newTodo.save();
         return res.status(200).send(savedTodo);
     } catch (error) {
-        return res.status(400).send(error);
+        if(error.isJoi === true)return res.status(400).send(createError("Invalid request body"));
+
+        return res.status(500).send(createError("Internal server error"));
+        
     }
 };
 
