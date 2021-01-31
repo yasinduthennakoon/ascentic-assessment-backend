@@ -15,10 +15,11 @@ const swaggerOptions = {
             title: 'Todo Application API',
             version: '1.0.0',
             description: 'Todo Api for todo application management',
-            servers: ['http://localhost:5000/api'],
+            servers: ['http://localhost:5000'],
         },
     },
     apis: ['./src/routes/*.js'],
+    
 };
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));

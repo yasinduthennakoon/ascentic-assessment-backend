@@ -22,7 +22,7 @@ const { verifyAccessToken } = require('../helpers/jwt_token');
 
 /**
  * @swagger
- * /todo/create:
+ * /api/todo/create:
  *  post:
  *   summary: create todo
  *   description: create a new todo
@@ -53,7 +53,7 @@ router.post('/create', verifyAccessToken, todoController.create);
 
 /**
  * @swagger
- * /todo/update:
+ * /api/todo/update:
  *  patch:
  *   summary: update todo
  *   description: update for a todo recode
@@ -90,7 +90,7 @@ router.patch('/update/:id', verifyAccessToken, todoController.update);
 
 /**
  * @swagger
- * /todo/getall:
+ * /api/todo/getall:
  *  get:
  *   summary: get all todo recodes
  *   description: get all (completed and active) todo recodes
@@ -113,7 +113,7 @@ router.get('/getall', verifyAccessToken, todoController.getAll);
 
 /**
  * @swagger
- * /todo/getactive:
+ * /api/todo/getactive:
  *  get:
  *   summary: get active todo recodes
  *   description: get only active todo recodes
@@ -136,7 +136,7 @@ router.get('/getactive', verifyAccessToken, todoController.getActive);
 
 /**
  * @swagger
- * /todo/delete:
+ * /api/todo/delete:
  *  delete:
  *   summary: get active todo recodes
  *   description: get only active todo recodes
