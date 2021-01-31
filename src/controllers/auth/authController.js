@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 const bcrypt = require('bcrypt');
 const createError = require('../../helpers/error_response');
+const createResponse = require('../../helpers/success_response');
 const User = require('../../model/User');
 const { signAccessToken } = require('../../helpers/jwt_token');
 const { signupSchema, signinSchema } = require('../../helpers/validation_schema');
@@ -28,13 +29,15 @@ exports.signup = async (req, res) => {
         await user.save();
         const accessToken = await signAccessToken(user._id);
 
-        return res.send({
-            userId: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            signAccessToken: accessToken,
-        });
+        return res.status(201).send(
+            createResponse({
+                userId: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                signAccessToken: accessToken,
+            }),
+        );
     } catch (error) {
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
@@ -55,13 +58,15 @@ exports.signin = async (req, res) => {
         if (!validPassword) return res.status(401).send(createError('Invalid password'));
 
         const accessToken = await signAccessToken(user._id);
-        return res.status(200).send({
-            userId: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            signAccessToken: accessToken,
-        });
+        return res.status(200).send(
+            createResponse({
+                userId: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                signAccessToken: accessToken,
+            }),
+        );
     } catch (error) {
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));

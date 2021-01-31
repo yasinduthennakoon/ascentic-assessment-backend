@@ -1,5 +1,6 @@
 const Todo = require('../../model/Todos');
 const createError = require('../../helpers/error_response');
+const createResponse = require('../../helpers/success_response');
 const { createTodoSchema, updateTodoSchema } = require('../../helpers/validation_schema');
 
 exports.create = async (req, res) => {
@@ -15,7 +16,7 @@ exports.create = async (req, res) => {
         });
 
         const savedTodo = await newTodo.save();
-        return res.status(200).send(savedTodo);
+        return res.status(201).send(createResponse(savedTodo));
     } catch (error) {
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
@@ -31,7 +32,7 @@ exports.update = async (req, res) => {
             new: true,
         });
 
-        return res.status(200).send(updateTodo);
+        return res.status(200).send(createResponse(updateTodo));
     } catch (error) {
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
@@ -41,7 +42,7 @@ exports.update = async (req, res) => {
 exports.getAll = async (req, res) => {
     try {
         const allTodos = await Todo.find({ userId: req.payload.userId });
-        return res.status(200).send(allTodos);
+        return res.status(200).send(createResponse(allTodos));
     } catch (error) {
         return res.status(500).send(createError('Internal server error'));
     }
@@ -49,8 +50,8 @@ exports.getAll = async (req, res) => {
 
 exports.getActive = async (req, res) => {
     try {
-        const allActiveTodos = await Todo.find({ userId: req.payload.userId, status: true });
-        return res.status(200).send(allActiveTodos);
+        const allActiveTodos = await Todo.find({ userId: req.payload.userId, activeStatus: true });
+        return res.status(200).send(createResponse(allActiveTodos));
     } catch (error) {
         return res.status(500).send(createError('Internal server error'));
     }
@@ -59,7 +60,7 @@ exports.getActive = async (req, res) => {
 exports.delete = async (req, res) => {
     try {
         const deleteTodo = await Todo.deleteOne({ _id: req.params.id }, { new: true });
-        return res.status(200).send(deleteTodo);
+        return res.status(200).send(createResponse(null));
     } catch (error) {
         return res.status(500).send(createError('Internal server error'));
     }
