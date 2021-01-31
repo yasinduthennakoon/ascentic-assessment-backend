@@ -59,7 +59,7 @@ exports.getActive = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const deleteTodo = await Todo.deleteOne({ _id: req.params.id }, { new: true });
+        await Todo.deleteOne({ _id: req.params.id }, { new: true });
         return res.status(200).send(createResponse(null));
     } catch (error) {
         return res.status(500).send(createError('Internal server error'));
