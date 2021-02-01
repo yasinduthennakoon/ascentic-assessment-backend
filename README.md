@@ -19,3 +19,7 @@ You can make api calls using this base url [http://localhost:5000](http://localh
 ## API Documentation
 
 After run the application in development mode open [http://localhost:5000/api-docs](http://localhost:5000/api-docs) to view the swagger API Documentation in the browser.
+
+## ER Diagram
+
+Use this link to view ER diagram [ER Diagram](https://drive.google.com/file/d/1dFaikFFajQ3gHxMPxvAyPIbhNHeu11nO/view?usp=sharing)
