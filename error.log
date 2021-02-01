@@ -1,1 +1,4 @@
 {"_original":{"title":"Test 4","description":"Test 4","activeStatus":"123"},"details":[{"message":"\"activeStatus\" must be a boolean","path":["activeStatus"],"type":"boolean.base","context":{"label":"activeStatus","value":"123","key":"activeStatus"}}],"level":"error","timestamp":"2021-02-01T00:58:28.896Z"}
+{"_original":{"email":"test@gmail.com","password":"1234"},"details":[{"message":"\"password\" length must be at least 6 characters long","path":["password"],"type":"string.min","context":{"limit":6,"value":"1234","label":"password","key":"password"}}],"level":"error","timestamp":"2021-02-01T04:42:54.856Z"}
+{"level":"error","timestamp":"2021-02-01T04:42:54.888Z"}
+{"level":"error","timestamp":"2021-02-01T04:42:59.866Z"}
