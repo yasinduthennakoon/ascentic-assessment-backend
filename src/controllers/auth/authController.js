@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const createError = require('../../helpers/error_response');
 const createResponse = require('../../helpers/success_response');
 const User = require('../../model/User');
+const { logger, fileLogger } = require('../../helpers/logger');
 const { signAccessToken } = require('../../helpers/jwt_token');
 const { signupSchema, signinSchema } = require('../../helpers/validation_schema');
 
@@ -39,6 +40,8 @@ exports.signup = async (req, res) => {
             }),
         );
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
     }
@@ -68,6 +71,8 @@ exports.signin = async (req, res) => {
             }),
         );
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
     }

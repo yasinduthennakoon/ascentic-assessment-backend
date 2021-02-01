@@ -1,6 +1,7 @@
 const Todo = require('../../model/Todos');
 const createError = require('../../helpers/error_response');
 const createResponse = require('../../helpers/success_response');
+const { logger, fileLogger } = require('../../helpers/logger');
 const { createTodoSchema, updateTodoSchema } = require('../../helpers/validation_schema');
 
 exports.create = async (req, res) => {
@@ -18,6 +19,8 @@ exports.create = async (req, res) => {
         const savedTodo = await newTodo.save();
         return res.status(201).send(createResponse(savedTodo));
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
     }
@@ -34,6 +37,8 @@ exports.update = async (req, res) => {
 
         return res.status(200).send(createResponse(updateTodo));
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         if (error.isJoi === true) return res.status(400).send(createError('Invalid request body'));
         return res.status(500).send(createError('Internal server error'));
     }
@@ -44,6 +49,8 @@ exports.getAll = async (req, res) => {
         const allTodos = await Todo.find({ userId: req.payload.userId });
         return res.status(200).send(createResponse(allTodos));
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         return res.status(500).send(createError('Internal server error'));
     }
 };
@@ -53,6 +60,8 @@ exports.getActive = async (req, res) => {
         const allActiveTodos = await Todo.find({ userId: req.payload.userId, activeStatus: true });
         return res.status(200).send(createResponse(allActiveTodos));
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         return res.status(500).send(createError('Internal server error'));
     }
 };
@@ -62,6 +71,8 @@ exports.delete = async (req, res) => {
         await Todo.deleteOne({ _id: req.params.id }, { new: true });
         return res.status(200).send(createResponse(null));
     } catch (error) {
+        logger.error(error);
+        fileLogger.error(error);
         return res.status(500).send(createError('Internal server error'));
     }
 };
